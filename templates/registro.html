@@ -1,36 +1,140 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+	<html lang="en">
+	
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
+	
+	  <title>Python | Proyecto Python</title>
+	
+	  <!-- css -->
+	  <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	  <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	  <link href="static/css/nivo-lightbox.css" rel="stylesheet" />
+	  <link href="static/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+	  <link href="static/css/owl.carousel.css" rel="stylesheet" media="screen" />
+	  <link href="static/css/owl.theme.css" rel="stylesheet" media="screen" />
+	  <link href="static/css/flexslider.css" rel="stylesheet" />
+	  <link href="static/css/animate.css" rel="stylesheet" />
+	  <link href="static/css/style.css" rel="stylesheet">
+	  <link href="static/color/default.css" rel="stylesheet">
+	
+	</head>
+	
+	<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+	
+	
+    <div id="navigation">
+      <nav class="navbar navbar-custom" role="navigation">
+        <div class="container">
+        <div class="row">
+          <div class="col-md-2 mob-logo">
+          <div class="row">
+            <div class="site-logo">
+            <a href="index.html"><img src="static/img/logo-dark.png" alt="" /></a>
+            </div>
+          </div>
+          </div>
+    
+    
+          <div class="col-md-10 mob-menu">
+          <div class="row">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                            <i class="fa fa-bars"></i>
+                            </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="menu">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="{{url_for('index')}}">Inicio</a></li>
+               
+            </ul>
+            </div>
+            <!-- /.Navbar-collapse -->
+          </div>
+          </div>
+        </div>
+        </div>
+        <!-- /.container -->
+      </nav>
+      </div>
+      <div class="container">
+        <div class="registro"></div>
+                <form method = "POST" action="{{url_for('registro')}}">
+                <label>Nombre y apellido:</label><br>
+                <input type="name" name="name"><br>
+                <label>Edad:</label><br>
+                <input type="number" name="age"><br>
+                <label>Laboratorio:</label><br>
+                <input type="name" name="laboratorio"><br><br>
+                <input type="submit" value="Enviar">
+                </form> 
+              </div>        
+            </div>   
 
-<!-- Titulo de la página-->
-<head>
-    <title>Registro</title>
-</head>
-
-<body>
-
-<h1><a title="inove website" href="https://inove.com.ar/"><img src="{{url_for('static', filename='media/cropped-3-1-300x131.png')}}" /></a></h1>
-
-<h2>Formulario de registro</h2>
-
-<p>Ingrese su ritmo cardíaco</p>
-
-<form method = "POST" action="{{url_for('registro')}}">
-  <label>Nombre y apellido:</label><br>
-  <input type="name" name="name"><br>
-  <label>Ritmo cardíaco [min 40, max 200]:</label><br>
-  <input type="number" min='40' max='200' name="heartrate"><br><br>
-  <input type="submit" value="Enviar">
-</form> 
 
 <p></p>
 
-<form action="{{url_for('index')}}">
-  <input type="submit" value="Home"/>
-</form>
+ <!-- /.Navbar-collapse <form action="{{url_for('index')}}">
+   Navbar-collapse  <input type="submit" value="Home"/>
+ /.Navbar-collapse </form>
 
-<form action="{{url_for('pulsaciones')}}">
-  <input type="submit" value="Pulsaciones"/>
-</form>
+<form action="{{url_for('personas')}}">
+  <input type="submit" value="Personas"/>
+</form>-->
+
+
+
+<footer>
+  <div class="container">
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+      <div class="text-center">
+      <a href="#intro" class="totop"><i class="pe-7s-angle-up pe-3x"></i></a>
+
+      <div class="social-widget">
+
+        <ul class="team-social">
+      <!--  <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+        <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+        <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+        <li class="social-dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+        </ul>-->
+
+      </div>
+      
+      </div>
+    </div>
+    </div>
+  </div>
+  </footer>
+
+  <!-- Core JavaScript Files -->
+  <script src="static/js/jquery.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8HeI8o-c1NppZA-92oYlXakhDPYR7XMY"></script>
+  <script src="static/js/jquery.sticky.js"></script>
+  <script src="static/js/slippry.min.js"></script>
+  <script src="static/js/jquery.flexslider-min.js"></script>
+  <script src="static/js/morphext.min.js"></script>
+  <script src="static/js/gmap.js"></script>
+  <script src="static/js/jquery.mb.YTPlayer.js"></script>
+  <script src="static/js/jquery.easing.min.js"></script>
+  <script src="static/js/jquery.scrollTo.js"></script>
+  <script src="static/js/jquery.appear.js"></script>
+  <script src="static/js/stellar.js"></script>
+  <script src="static/js/wow.min.js"></script>
+  <script src="static/js/owl.carousel.min.js"></script>
+  <script src="static/js/nivo-lightbox.min.js"></script>
+  <script src="static/js/jquery.nicescroll.min.js"></script>
+  <script src="static/js/custom.js"></script>
+  <script src="static/contactform/contactform.js"></script>
 
 </body>
-</html>
+
+</html>	

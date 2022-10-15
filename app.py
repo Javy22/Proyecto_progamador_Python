@@ -1,13 +1,13 @@
 '''
 Flask [Python]
-Ejemplos de clase
+Ejercicios de práctica
 
 Autor: Inove Coding School
 Version: 2.0
-
+ 
 Descripcion:
 Se utiliza Flask para crear un WebServer que levanta los datos de
-las personas que registran su ritmo cardíaco.
+las personas registradas.
 
 Ingresar a la siguiente URL para ver los endpoints disponibles
 http://127.0.0.1:5000/
@@ -15,23 +15,20 @@ http://127.0.0.1:5000/
 
 # Realizar HTTP POST con --> post.py
 
-from datetime import datetime
-
 import traceback
 from flask import Flask, request, jsonify, render_template, Response, redirect, url_for
 
 import utils
-import heart
+import persona
 
-# Crear el server Flask
 app = Flask(__name__)
 
 # Indicamos al sistema (app) de donde leer la base de datos
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///heart.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///personas.db"
 # Asociamos nuestro controlador de la base de datos con la aplicacion
-heart.db.init_app(app)
+persona.db.init_app(app)
 
-# Ruta que se ingresa por la ULR 127.0.0.1:5000
+
 @app.route("/")
 def index():
     try:
@@ -43,88 +40,109 @@ def index():
         return jsonify({'trace': traceback.format_exc()})
 
 
-# Ruta que se ingresa por la ULR 127.0.0.1:5000/pulsaciones
-@app.route("/pulsaciones")
-def pulsaciones():
+# ejercicio de practica Nº1
+@app.route("/personas")
+def personas():
     try:
-        # Obtener de la query string los valores de limit y offset
+        # Alumno:
+        # Implementar la captura de limit y offset de los argumentos
+        # de la URL
+        # limit = ...
+        # offset = ....
         limit_str = str(request.args.get('limit'))
         offset_str = str(request.args.get('offset'))
 
         limit = 0
         offset = 0
-
+        # Debe verificar si el limit y offset son válidos cuando
+        # no son especificados en la URL
         if(limit_str is not None) and (limit_str.isdigit()):
-            limit = int(limit_str)
+         limit = int(limit_str)
 
         if(offset_str is not None) and (offset_str.isdigit()):
-            offset = int(offset_str)
+         offset = int(offset_str)
+        # Alumno: Pasarle al metodo report los valores de limit y offset
+        data = persona.report()
+        result = render_template('tabla.html', data=data)
 
-        # Obtener el reporte
-        data = heart.report(limit=limit, offset=offset)
-
-        # Renderizar el temaplate HTML pulsaciones.html
-        print("Renderizar tabla.html")
-        return render_template('tabla.html', data=data)
+        #result = '''<h3>Alumno: Implementar la llamada
+        #            al HTML tabla.html
+        #            con render_template, recuerde pasar
+        #            data como parámetro</h3>'''
+        # Sacar esta linea cuando haya implementado el return
+        # con render template
+        return result
     except:
         return jsonify({'trace': traceback.format_exc()})
 
 
-# Ruta que se ingresa por la ULR 127.0.0.1:5000/pulsaciones/<nombre>
-@app.route("/pulsaciones/<name>")
-def pulsaciones_historico(name):
-    try:
-        # Obtener el nombre en minúscula
-        name = name.lower()
-        # Obtener el historial de la persona de la DB 
-        print("Obtener gráfico de la persona", name)       
-        time, heartrate = heart.chart(name)
-
-        # Transformar los datos en una imagen HTML con matplotlib
-        image_html = utils.graficar(time, heartrate)
-        return Response(image_html.getvalue(), mimetype='image/png')
-    except:
-        return jsonify({'trace': traceback.format_exc()})
-
-
-# Ruta que se ingresa por la ULR 127.0.0.1:5000/registro
+# ejercicio de practica Nº2
 @app.route("/registro", methods=['GET', 'POST'])
 def registro():
     if request.method == 'GET':
-        # Si entré por "GET" es porque acabo de cargar la página
         try:
-            # Renderizar el temaplate HTML registro.html
-            print("Renderizar registro.html")
             return render_template('registro.html')
         except:
             return jsonify({'trace': traceback.format_exc()})
 
     if request.method == 'POST':
         try:
-            # Obtener del HTTP POST JSON el nombre (en minisculas) y los pulsos
-            nombre = str(request.form.get('name')).lower()
-            pulsos = str(request.form.get('heartrate'))
+            name = ""
+            age = 0
+            laboratorio = "" 
 
-            if(nombre is None or pulsos is None or pulsos.isdigit() is False):
-                # Datos ingresados incorrectos
-                    return Response(status=400)
-            time = datetime.now()
+            
 
-            print("Registrar persona", nombre, "con pulsaciones", pulsos)
-            heart.insert(time, nombre, int(pulsos))
+            # Alumno:
+            # Obtener del HTTP POST JSON el nombre y la edad
+            # name = ...
+            # age = ...
+            name = str(request.form.get('name')).lower()
+            age = int(request.form.get('age'))
+            laboratorio = str(request.form.get('laboratorio')).lower()
+            #if(name is None or age is None or age.isdigit() is False):
+               #return Response(status=400)
 
+            # Alumno: descomentar la linea persona.insert una vez implementado
+            # lo anterior:
+            persona.insert(name, int(age),laboratorio)
             # Como respuesta al POST devolvemos la tabla de valores
-            return redirect(url_for('pulsaciones'))
+            
+            return redirect(url_for('personas'))
         except:
             return jsonify({'trace': traceback.format_exc()})
 
+# ejercicio de practica Nº3
+@app.route("/comparativa")
+def comparativa():
+    try:
+        # Alumno:
+        # Implementar una función en persona.py llamada "dashboard"
+        # Lo que desea es realizar un gráfico de linea con las edades
+        # de todas las personas en la base de datos
+
+        # Para eso, su función "dashboard" debe devolver dos valores:
+        # - El primer valor que debe devolver es "x", que debe ser
+        # los Ids de todas las personas en su base de datos
+        # - El segundo valor que debe devolver es "y", que deben ser
+        # todas las edades respectivas a los Ids que se encuentran en "x"
+
+        # Descomentar luego de haber implementado su función en persona.py:
+
+        x, y = persona.dashboard()
+        image_html = utils.graficar(x, y)
+        return Response(image_html.getvalue(), mimetype='image/png')
+
+        #return "Alumno --> Realice la implementacion"
+    except:
+        return jsonify({'trace': traceback.format_exc()})
 
 # Este método se ejecutará solo una vez
 # la primera vez que ingresemos a un endpoint
 @app.before_first_request
 def before_first_request_func():
     # Crear aquí todas las bases de datos
-    heart.db.create_all()
+    persona.db.create_all()
     print("Base de datos generada")
 
 
