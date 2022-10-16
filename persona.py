@@ -43,7 +43,7 @@ def report(limit=0, offset=0):
             query = query.offset(offset)
 
     json_result_list = []
-
+    
     # De los resultados obtenidos pasar a un diccionario
     # que luego será enviado como JSON
     # TIP --> la clase Persona podría tener una función
